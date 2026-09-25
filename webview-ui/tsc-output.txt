@@ -1,0 +1,64 @@
+src/App.tsx(6,10): error TS2305: Module '"./components"' has no exported member 'TabBar'.
+src/App.tsx(22,10): error TS6133: 'genError' is declared but its value is never read.
+src/App.tsx(37,14): error TS2678: Type '"generationError"' is not comparable to type '"metadataLoaded" | "METADATA_ERROR" | "dependenciesUpdated" | "configurationUpdated" | "generationStarted" | "GENERATION_PROGRESS" | "GENERATION_SUCCESS" | "GENERATION_ERROR" | "DIRECTORY_STATUS" | "FOLDER_SELECTED" | "error"'.
+src/App.tsx(43,13): error TS2353: Object literal may only specify known properties, and 'step' does not exist in type '{ message: string; code?: string | undefined; details?: string | undefined; } | ((prevState: { message: string; code?: string | undefined; details?: string | undefined; } | null) => { ...; } | null)'.
+src/App.tsx(63,9): error TS6133: 'selectedDepNames' is declared but its value is never read.
+src/App.tsx(107,24): error TS7006: Parameter 'id' implicitly has an 'any' type.
+src/components/DependencyCard.tsx(1,10): error TS1484: 'DependencyOption' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/components/DependencySearch.tsx(2,10): error TS1484: 'DependencyOption' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/components/DirectoryPicker.tsx(1,10): error TS1484: 'DirectoryMode' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/components/ErrorView.tsx(1,10): error TS2305: Module '"../services/messageService"' has no exported member 'ErrorCode'.
+src/components/index.ts(1,10): error TS2303: Circular definition of import alias 'SelectField'.
+src/components/index.ts(1,23): error TS2303: Circular definition of import alias 'RadioGroup'.
+src/components/ProgressView.tsx(1,10): error TS1484: 'ProgressUpdate' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/components/SelectedDeps.tsx(1,10): error TS1484: 'DependencyOption' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/components/SelectField.tsx(1,1): error TS6133: 'ReactNode' is declared but its value is never read.
+src/components/SelectField.tsx(1,10): error TS1484: 'ReactNode' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/components/SummaryView.tsx(1,10): error TS1484: 'ProjectConfiguration' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/components/TabBar.tsx(1,1): error TS6192: All imports in import declaration are unused.
+src/components/TabBar.tsx(1,10): error TS1484: 'ProjectConfiguration' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/components/TabBar.tsx(1,32): error TS1484: 'DependencyGroup' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/hooks/useMetadata.ts(2,10): error TS1484: 'VsCodeApi' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/hooks/useMetadata.ts(4,3): error TS1484: 'InitializrMetadata' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/hooks/useMetadata.ts(5,3): error TS1484: 'MetadataLoadedMsg' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/hooks/useMetadata.ts(6,3): error TS1484: 'MetadataErrorMsg' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/hooks/useMetadata.ts(7,3): error TS1484: 'HostMessage' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/hooks/useMetadata.ts(8,3): error TS1484: 'MessageService' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/hooks/useMetadata.ts(35,9): error TS6133: 'sendMessage' is declared but its value is never read.
+src/hooks/useMetadata.ts(36,6): error TS6133: 'type' is declared but its value is never read.
+src/hooks/useProjectConfig.ts(2,10): error TS1484: 'ProjectConfiguration' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/hooks/useProjectConfig.ts(2,32): error TS1484: 'InitializrMetadata' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/hooks/useProjectConfig.ts(73,44): error TS6133: 'defaultValue' is declared but its value is never read.
+src/hooks/useProjectConfig.ts(74,14): error TS7053: Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'ProjectConfigState'.
+  No index signature with a parameter of type 'string' was found on type 'ProjectConfigState'.
+src/hooks/useProjectConfig.ts(92,50): error TS2339: Property 'projectName' does not exist on type 'ProjectConfigState'.
+src/hooks/useVsCodeApi.ts(102,10): error TS6133: 'isReady' is declared but its value is never read.
+src/pages/DependenciesPage.tsx(2,10): error TS2305: Module '"../components"' has no exported member 'DependencyCard'.
+src/pages/DependenciesPage.tsx(2,26): error TS2305: Module '"../components"' has no exported member 'SelectedDeps'.
+src/pages/DependenciesPage.tsx(2,40): error TS2305: Module '"../components"' has no exported member 'DependencySearch'.
+src/pages/DependenciesPage.tsx(3,10): error TS1484: 'ProjectConfigHookResult' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/pages/DependenciesPage.tsx(4,10): error TS1484: 'InitializrMetadata' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/pages/DependenciesPage.tsx(4,30): error TS1484: 'DependencyOption' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/pages/DetailsPage.tsx(1,10): error TS2305: Module '"../components"' has no exported member 'TextField'.
+src/pages/DetailsPage.tsx(2,10): error TS1484: 'ProjectConfigHookResult' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/pages/DetailsPage.tsx(33,21): error TS7006: Parameter 'v' implicitly has an 'any' type.
+src/pages/DetailsPage.tsx(39,21): error TS7006: Parameter 'v' implicitly has an 'any' type.
+src/pages/ProjectPage.tsx(2,10): error TS1484: 'ProjectConfigHookResult' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/pages/ProjectPage.tsx(3,10): error TS1484: 'InitializrMetadata' is a type and must be imported using a type-only import when 'verbatimModuleSyntax' is enabled.
+src/pages/ProjectPage.tsx(32,21): error TS7006: Parameter 'v' implicitly has an 'any' type.
+src/pages/ProjectPage.tsx(38,21): error TS7006: Parameter 'v' implicitly has an 'any' type.
+src/pages/ProjectPage.tsx(44,21): error TS7006: Parameter 'v' implicitly has an 'any' type.
+src/pages/ProjectPage.tsx(50,21): error TS7006: Parameter 'v' implicitly has an 'any' type.
+src/pages/ProjectPage.tsx(56,21): error TS7006: Parameter 'v' implicitly has an 'any' type.
+src/services/messageService.ts(244,15): error TS2536: Type '"payload"' cannot be used to index type 'Extract<InitializationRequestMsg, { type: T; }> | Extract<DependencySelectionMsg, { type: T; }> | ... 6 more ... | Extract<...>'.
+src/services/messageService.ts(258,15): error TS2536: Type '"payload"' cannot be used to index type 'Extract<InitializationRequestMsg, { type: T; }> | Extract<DependencySelectionMsg, { type: T; }> | ... 6 more ... | Extract<...>'.
+src/services/messageService.ts(277,12): error TS2322: Type '<T extends WebviewMessage["type"]>(type: T, payload?: Extract<WebviewMessage, { type: T; }>["payload"]) => void' is not assignable to type '<T extends WebviewMessage["type"]>(type: T, payload?: (Extract<InitializationRequestMsg, { type: T; }> | Extract<DependencySelectionMsg, { ...; }> | ... 6 more ... | Extract<...>)["payload"] | undefined) => void'.
+  Types of parameters 'payload' and 'payload' are incompatible.
+    Type '(Extract<import("D:/Project/VS-Code-Extension/spring-boot-initializer/webview-ui/src/services/messageService").InitializationRequestMsg, { type: T; }> | ... 7 more ... | Extract<...>)["payload"] | undefined' is not assignable to type '(Extract<import("D:/Project/VS-Code-Extension/spring-boot-initializer/webview-ui/src/services/messageService").InitializationRequestMsg, { type: T; }> | ... 7 more ... | Extract<...>)["payload"] | undefined'. Two different types with this name exist, but they are unrelated.
+      Type 'Extract<InitializationRequestMsg, { type: T; }>["payload"] | Extract<DependencySelectionMsg, { type: T; }>["payload"] | ... 6 more ... | Extract<...>["payload"]' is not assignable to type '(Extract<InitializationRequestMsg, { type: T; }> | Extract<DependencySelectionMsg, { type: T; }> | ... 6 more ... | Extract<...>)["payload"] | undefined'.
+        Type 'Extract<InitializationRequestMsg, { type: T; }>["payload"]' is not assignable to type '(Extract<InitializationRequestMsg, { type: T; }> | Extract<DependencySelectionMsg, { type: T; }> | ... 6 more ... | Extract<...>)["payload"] | undefined'.
+          Type '{ projectId?: string | undefined; template?: string | undefined; } | undefined' is not assignable to type '(Extract<InitializationRequestMsg, { type: T; }> | Extract<DependencySelectionMsg, { type: T; }> | ... 6 more ... | Extract<...>)["payload"] | undefined'.
+            Type '{ projectId?: string | undefined; template?: string | undefined; }' is not assignable to type 'Extract<InitializationRequestMsg, { type: T; }>["payload"] & Extract<DependencySelectionMsg, { type: T; }>["payload"] & ... 6 more ... & Extract<...>["payload"]'.
+              Type '{ projectId?: string | undefined; template?: string | undefined; }' is not assignable to type 'Extract<DependencySelectionMsg, { type: T; }>["payload"]'.
+                Property 'dependencies' is missing in type '{ projectId?: string | undefined; template?: string | undefined; }' but required in type '{ dependencies: string[]; groups?: string[] | undefined; }'.
+

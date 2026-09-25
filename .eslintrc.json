@@ -1,0 +1,34 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "env": {
+    "node": true,
+    "es2020": true
+  },
+  "rules": {
+    "@typescript-eslint/naming-convention": [
+      "warn",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": false
+        }
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "no-console": "warn"
+  },
+  "ignorePatterns": ["out", "dist", "node_modules", "webview-ui", "*.js"]
+}

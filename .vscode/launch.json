@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Extension",
+            "type": "extensionHost",
+            "request": "launch",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/out/**/*.js"
+            ],
+            "preLaunchTask": "npm: watch"
+        },
+        {
+            "name": "Run Webview",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:5173",
+            "webRoot": "${workspaceFolder}/webview-ui/src",
+            "preLaunchTask": "npm: watch:webview"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Run Extension & Webview",
+            "configurations": [
+                "Run Extension",
+                "Run Webview"
+            ],
+            "stopAll": true
+        }
+    ]
+}

@@ -1,0 +1,89 @@
+{
+  "name": "spring-boot-initializer",
+  "displayName": "Spring Boot Initializer",
+  "description": "Create Spring Boot projects without leaving VS Code",
+  "version": "0.1.0",
+  "publisher": "your-publisher-name",
+  "license": "MIT",
+  "icon": "media/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/spring-boot-initializer-vscode.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/spring-boot-initializer-vscode/issues"
+  },
+  "homepage": "https://github.com/your-username/spring-boot-initializer-vscode#readme",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Programming Languages",
+    "Snippets"
+  ],
+  "keywords": [
+    "spring",
+    "spring boot",
+    "spring initializer",
+    "spring initializr",
+    "java",
+    "maven",
+    "gradle",
+    "backend"
+  ],
+  "activationEvents": [
+    "onCommand:springBootInitializer.initialize"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "springBootInitializer.initialize",
+        "title": "Spring Boot: Initialize Spring Boot",
+        "category": "Spring Boot"
+      }
+    ],
+    "configuration": {
+      "title": "Spring Boot Initializer",
+      "properties": {
+        "springBootInitializer.initializrUrl": {
+          "type": "string",
+          "default": "https://start.spring.io",
+          "description": "Spring Initializr server URL. Change this to use a private or enterprise Initializr server.",
+          "pattern": "^https?://.+"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile && npm run build:webview",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "build:webview": "cd webview-ui && npm run build",
+    "watch:webview": "cd webview-ui && npm run dev",
+    "pretest": "npm run compile",
+    "test": "node ./out/test/runTest.js",
+    "test:unit": "mocha --require ts-node/register 'test/unit/**/*.test.ts'",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.5",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.14.10",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^7.16.0",
+    "@typescript-eslint/parser": "^7.16.0",
+    "@vscode/test-electron": "^2.4.9",
+    "eslint": "^8.57.0",
+    "mocha": "^10.6.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.14"
+  }
+}
