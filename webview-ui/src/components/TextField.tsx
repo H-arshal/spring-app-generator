@@ -25,15 +25,15 @@ export function TextField({
   affix,
 }: TextFieldProps) {
   return (
-    <label className="field">
-      <span className="field-label">
-        {label}
-        {hint && <span className="field-hint">{hint}</span>}
-      </span>
-      <span className="field-control">
+    <div>
+      <div className="flex justify-between items-baseline mb-1">
+        <label className="font-pixel text-xs font-bold text-black">{label}</label>
+        {hint && <span className="text-[11px] text-gray-600 font-mono">{hint}</span>}
+      </div>
+      <div className="flex relative">
         <input
           type="text"
-          className={`control ${error ? 'is-invalid' : ''} ${affix ? 'has-affix' : ''}`}
+          className={`w-full bg-[#faf6ee] border-2 border-black px-3 py-1.5 font-mono text-sm text-black focus:outline-none focus:ring-0 focus:border-black shadow-[2px_2px_0px_#000] ${affix ? 'border-r-0' : ''} ${error ? 'border-red-500' : ''}`}
           value={value}
           onChange={e => onChange(e.target.value)}
           placeholder={placeholder}
@@ -41,9 +41,9 @@ export function TextField({
           autoFocus={autoFocus}
           spellCheck={false}
         />
-        {affix && <span className="field-affix">{affix}</span>}
-      </span>
-      {error && <span className="field-error">{error}</span>}
-    </label>
+        {affix && affix}
+      </div>
+      {error && <span className="text-red-500 text-xs font-mono mt-1">{error}</span>}
+    </div>
   );
 }

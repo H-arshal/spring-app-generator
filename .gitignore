@@ -75,7 +75,7 @@ Desktop.ini
 $RECYCLE.BIN/
 *.lnk
 *.stackdump
-
+design/
 # macOS
 .DS_Store
 .AppleDouble

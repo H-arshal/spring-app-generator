@@ -5,31 +5,19 @@ import { useProjectConfig } from './hooks/useProjectConfig';
 import { useGeneration } from './hooks/useGeneration';
 import { createMessageService } from './services/messageService';
 import type { DirectoryMode } from './services/messageService';
-import {
-  Stepper,
-  ProgressView,
-  ErrorView,
-  Modal,
-} from './components';
+import { Stepper, ProgressView, ErrorView, Modal } from './components';
 import type { StepDef } from './components';
 import { ProjectPage } from './pages/ProjectPage';
 import { DetailsPage } from './pages/DetailsPage';
 import { ReviewPage } from './pages/ReviewPage';
 import { DependenciesPage } from './pages/DependenciesPage';
-import './App.css';
+
 
 const STEPS: StepDef[] = [
   { id: 'project', label: 'Platform', meta: 'Runtime & build tool' },
   { id: 'details', label: 'Details', meta: 'Coordinates & output' },
   { id: 'dependencies', label: 'Dependencies', meta: 'Starters & libraries' },
   { id: 'review', label: 'Review', meta: 'Confirm & generate' },
-];
-
-const STEP_DESCRIPTIONS = [
-  'Choose the Spring Boot version, Java runtime, language and build tool.',
-  'Set the project coordinates and where the project should be written.',
-  'Select the Spring starters and libraries to include in the project.',
-  'Confirm the configuration, then generate the project.',
 ];
 
 export default function App() {
@@ -42,15 +30,12 @@ export default function App() {
 
   const [stepIndex, setStepIndex] = useState(0);
   const [furthestIndex, setFurthestIndex] = useState(1);
-
-  // Output-directory state
   const [dirMode, setDirMode] = useState<DirectoryMode>('workspace');
   const [dirPath, setDirPath] = useState('');
   const [folderName, setFolderName] = useState('');
   const [workspaceFolder, setWorkspaceFolder] = useState<string | undefined>();
 
   useEffect(() => {
-    // Seed the folder name from the artifact once it is known.
     if (!folderName && projectConfig.config.artifactId) {
       setFolderName(projectConfig.config.artifactId);
     }
@@ -86,222 +71,122 @@ export default function App() {
 
   const handleGenerate = () => {
     const cfg = projectConfig.config;
-    const basePath = resolveTargetPath();
     generation.generate({
-      bootVersion: cfg.bootVersion,
-      language: cfg.language,
-      projectType: cfg.projectType,
-      packaging: cfg.packaging,
-      javaVersion: cfg.javaVersion,
-      groupId: cfg.groupId,
-      artifactId: cfg.artifactId,
-      name: cfg.name,
-      description: cfg.description,
-      packageName: cfg.packageName,
-      dependencies: cfg.dependencies,
-      targetPath: basePath,
+      ...cfg,
+      targetPath: resolveTargetPath(),
       createSubfolder: dirMode !== 'chooseFolder',
     });
   };
 
   const handleBrowse = () => messageService.post('SELECT_FOLDER');
 
+  const depCount = projectConfig.config.dependencies.length;
+  const isGenerating = generation.status === 'running';
+  const isLastStep = stepIndex === STEPS.length - 1;
+
   if (metadata.loading) {
     return (
-      <div className="center-screen">
-        <div className="spinner" />
-        <p className="stage-desc">Loading Spring Initializr metadata…</p>
-      </div>
+      <main className="w-full max-w-[1240px] flex flex-col gap-4 items-center justify-center min-h-[500px] flex-1">
+        <div className="font-pixel font-bold text-2xl uppercase animate-pulse">Loading Spring Initializr...</div>
+      </main>
     );
   }
 
   if (metadata.error) {
     return (
-      <div className="center-screen">
-        <h2 className="stage-title">Couldn’t load metadata</h2>
-        <p className="stage-desc">{metadata.error}</p>
-        <button className="btn btn-primary" onClick={metadata.refresh}>
-          Retry
-        </button>
-      </div>
+      <main className="w-full max-w-[1240px] flex flex-col gap-4 items-center justify-center min-h-[500px] flex-1">
+        <h2 className="font-pixel text-red-500 font-bold text-2xl uppercase">Error Loading Metadata</h2>
+        <p className="font-mono text-sm">{metadata.error}</p>
+        <button className="bg-black text-white px-4 py-2 font-bold uppercase mt-4" onClick={metadata.refresh}>Retry</button>
+      </main>
     );
   }
 
-  const depCount = projectConfig.config.dependencies.length;
-  const isGenerating = generation.status === 'running';
-  const isLastStep = stepIndex === STEPS.length - 1;
-
   return (
-    <div className="shell">
-      <header className="topbar">
-        <div className="brand">
-          <span className="brand-mark" aria-hidden="true">
-            ⬢
-          </span>
-          <span className="brand-text">
-            <span className="brand-name">Spring Boot Initializer</span>
-            <span className="brand-sub mono">
+    <main className="w-full min-w-0 min-h-0 max-w-[1240px] flex flex-col gap-4 flex-1" data-purpose="app-shell">
+      <header className="bg-[#fdfaf6] border-hard-3 shadow-hard-sm flex items-center justify-between px-3 py-2.5 shrink-0">
+        <div className="flex items-center gap-3.5">
+          <div className="w-12 h-12 bg-[#ff2a8d] border-hard-2 flex items-center justify-center shadow-[2px_2px_0px_#000]">
+            <svg className="w-8 h-8 fill-black" viewBox="0 0 16 16" shapeRendering="crispEdges">
+              <rect x="5" y="2" width="3" height="1"></rect><rect x="4" y="3" width="5" height="1"></rect>
+              <rect x="3" y="4" width="6" height="1"></rect><rect x="2" y="5" width="7" height="1"></rect>
+              <rect x="2" y="6" width="7" height="1"></rect><rect x="2" y="7" width="6" height="1"></rect>
+              <rect x="3" y="8" width="5" height="1"></rect><rect x="4" y="9" width="4" height="1"></rect>
+              <rect x="5" y="10" width="3" height="1"></rect><rect x="6" y="11" width="2" height="1"></rect>
+              <rect x="7" y="12" width="1" height="1"></rect>
+              <rect x="7" y="4" width="1" height="1" fill="#ff2a8d"></rect><rect x="6" y="6" width="1" height="1" fill="#ff2a8d"></rect>
+            </svg>
+          </div>
+          <div>
+            <h1 className="font-pixel text-lg md:text-xl font-bold tracking-tight text-black leading-none">Spring Boot Initializer</h1>
+            <p className="font-mono-retro text-xs md:text-sm text-black mt-1 font-bold tracking-tight">
               {projectConfig.config.groupId || 'com.example'}.{projectConfig.config.artifactId || 'demo'}
-            </span>
-          </span>
+            </p>
+          </div>
         </div>
-        <div className="topbar-actions">
-          <span className="badge">{depCount} dependencies</span>
+        <div className="flex items-center gap-4">
+          <div className="bg-black text-white text-xs md:text-sm font-bold px-3.5 py-1.5 border-2 border-black tracking-wide">
+            {depCount} dependencies
+          </div>
         </div>
       </header>
 
-      <div className="shell-body">
-        <Stepper
-          steps={STEPS}
-          currentIndex={stepIndex}
-          furthestIndex={furthestIndex}
-          onSelect={goTo}
-          variant="rail"
-        />
-
-        <div className="stage">
-          <Stepper
-            steps={STEPS}
-            currentIndex={stepIndex}
-            furthestIndex={furthestIndex}
-            onSelect={goTo}
-            variant="compact"
-          />
-          <div className="stage-inner">
-            <div className="stage-head">
-              <div className="stage-eyebrow">Step {stepIndex + 1} of {STEPS.length}</div>
-              <h2 className="stage-title">{STEPS[stepIndex].label}</h2>
-              <p className="stage-desc">{STEP_DESCRIPTIONS[stepIndex]}</p>
-            </div>
-
-            {stepIndex === 0 && (
-              <ProjectPage metadata={metadata.metadata} config={projectConfig} />
-            )}
-            {stepIndex === 1 && (
-              <DetailsPage
-                config={projectConfig}
-                directory={{
-                  mode: dirMode,
-                  path: dirPath,
-                  newFolderName: folderName,
-                  workspaceFolder,
-                }}
-                onDirectoryModeChange={setDirMode}
-                onDirectoryPathChange={setDirPath}
-                onFolderNameChange={setFolderName}
-                onBrowse={handleBrowse}
-              />
-            )}
-            {stepIndex === 2 && (
-              <DependenciesPage metadata={metadata.metadata} config={projectConfig} />
-            )}
-            {stepIndex === 3 && (
-              <ReviewPage metadata={metadata.metadata} config={projectConfig} />
-            )}
-          </div>
-        </div>
+      <div className="flex flex-col md:flex-row gap-4 items-stretch flex-1 min-h-0">
+        <Stepper steps={STEPS} currentIndex={stepIndex} furthestIndex={furthestIndex} onSelect={goTo} variant="rail" />
+        
+        <section className="flex-grow min-w-0 min-h-0 bg-[#fdfaf6] border-hard-3 p-5 md:p-7 relative flex flex-col overflow-y-auto overflow-x-hidden">
+          {stepIndex === 0 && <ProjectPage metadata={metadata.metadata} config={projectConfig} />}
+          {stepIndex === 1 && <DetailsPage config={projectConfig} directory={{ mode: dirMode, path: dirPath, newFolderName: folderName, workspaceFolder }} onDirectoryModeChange={setDirMode} onDirectoryPathChange={setDirPath} onFolderNameChange={setFolderName} onBrowse={handleBrowse} />}
+          {stepIndex === 2 && <DependenciesPage metadata={metadata.metadata} config={projectConfig} />}
+          {stepIndex === 3 && <ReviewPage metadata={metadata.metadata} config={projectConfig} />}
+        </section>
       </div>
 
-      <footer className="shell-bar">
-        <div className="bar-hint">
-          {isLastStep ? (
-            <>
-              Ready to generate
-              <span className="sep">·</span>
-              <span className="mono">{projectConfig.config.artifactId || 'project'}</span>
-            </>
-          ) : (
-            <>
-              {STEPS[stepIndex].label} configuration
-              <span className="sep">·</span>
-              <span>Changes apply immediately</span>
-            </>
-          )}
+      <footer className="bg-[#fdfaf6] border-hard-3 shadow-hard-sm flex flex-col sm:flex-row items-center justify-between px-3.5 py-2.5 gap-3 shrink-0">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="border-hard-2 px-1.5 py-0.5 bg-white font-mono font-bold text-xs">&gt;_</div>
+          <div className="font-mono text-xs md:text-sm font-medium text-neutral-900 flex items-center gap-2">
+            <span>{STEPS[stepIndex].label} configuration</span>
+            <span className="text-neutral-400">•</span>
+            <span>Changes apply immediately</span>
+          </div>
         </div>
-        <div className="bar-actions">
+        <div className="flex gap-2 w-full sm:w-auto">
           {stepIndex > 0 && (
-            <button className="btn btn-ghost" onClick={handleBack} disabled={isGenerating}>
+            <button onClick={handleBack} disabled={isGenerating} className="flex-1 sm:flex-none bg-white hover:bg-neutral-100 border-hard-2 px-6 py-2 font-display font-extrabold text-sm md:text-base text-black flex items-center justify-center shadow-[2.5px_2.5px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">
               Back
             </button>
           )}
           {!isLastStep ? (
-            <button className="btn btn-primary" onClick={handleNext} disabled={isGenerating}>
-              Continue
+            <button onClick={handleNext} disabled={isGenerating} className="flex-1 sm:flex-none bg-[#5be8b5] hover:bg-[#4edaa7] border-hard-2 px-8 py-2 font-display font-extrabold text-sm md:text-base text-black flex items-center justify-center gap-2 shadow-[2.5px_2.5px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">
+              <span>Continue</span><span className="text-lg leading-none">→</span>
             </button>
           ) : (
-            <button
-              className="btn btn-primary"
-              onClick={handleGenerate}
-              disabled={isGenerating}
-            >
-              {isGenerating ? 'Generating…' : 'Generate project'}
+            <button onClick={handleGenerate} disabled={isGenerating} className="flex-1 sm:flex-none bg-[#5be8b5] hover:bg-[#4edaa7] border-hard-2 px-8 py-2 font-display font-extrabold text-sm md:text-base text-black flex items-center justify-center gap-2 shadow-[2.5px_2.5px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">
+              {isGenerating ? 'Generating...' : 'Generate Project'}
             </button>
           )}
         </div>
       </footer>
 
       {isGenerating && (
-        <Modal
-          title="Generating project"
-          icon={<span className="status-mark ok" aria-hidden="true">⬡</span>}
-          dismissible={false}
-        >
-          {generation.progress ? (
-            <ProgressView progress={generation.progress} />
-          ) : (
-            <div className="kv-row">
-              <span className="progress-title">Starting…</span>
-              <div className="spinner" />
-            </div>
-          )}
+        <Modal title="Generating project" icon={<span className="font-pixel">⬡</span>} dismissible={false}>
+          {generation.progress ? <ProgressView progress={generation.progress} /> : <div className="animate-pulse">Starting...</div>}
         </Modal>
       )}
 
       {generation.status === 'success' && generation.result && (
-        <Modal
-          title="Project generated"
-          icon={<span className="status-mark ok" aria-hidden="true">✓</span>}
-          onClose={generation.dismiss}
-          footer={
-            <button className="btn btn-primary" onClick={generation.dismiss}>
-              Done
-            </button>
-          }
-        >
-          <p className="stage-desc" style={{ marginTop: 0 }}>
-            Your Spring Boot project was created successfully.
-          </p>
-          <div className="kv">
-            <div className="kv-row">
-              <span className="kv-key">Location</span>
-              <span className="kv-val mono">{generation.result.projectPath}</span>
-            </div>
-          </div>
-          {generation.result.nextSteps.length > 0 && (
-            <div className="detail-block">
-              {generation.result.nextSteps.join('\n')}
-            </div>
-          )}
+        <Modal title="Project generated" icon={<span className="font-pixel">✓</span>} onClose={generation.dismiss} footer={<button className="bg-black text-white px-4 py-2 font-bold uppercase mt-4" onClick={generation.dismiss}>Done</button>}>
+          <p className="font-mono mt-4">Your Spring Boot project was created successfully.</p>
+          <p className="font-mono font-bold mt-2">{generation.result.projectPath}</p>
         </Modal>
       )}
 
       {generation.status === 'error' && generation.error && (
-        <Modal
-          title="Generation failed"
-          icon={<span className="status-mark err" aria-hidden="true">!</span>}
-          onClose={generation.dismiss}
-        >
-          <ErrorView
-            message={generation.error.message}
-            code={generation.error.code}
-            step={generation.error.step}
-            details={generation.error.details}
-            recoverable={generation.error.code !== 'CANCELLED'}
-            onRetry={handleGenerate}
-            onChooseLocation={handleBrowse}
-          />
+        <Modal title="Generation failed" icon={<span className="font-pixel">!</span>} onClose={generation.dismiss}>
+          <ErrorView message={generation.error.message} code={generation.error.code} step={generation.error.step} details={generation.error.details} recoverable={generation.error.code !== 'CANCELLED'} onRetry={handleGenerate} onChooseLocation={handleBrowse} />
         </Modal>
       )}
-    </div>
+    </main>
   );
 }

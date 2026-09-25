@@ -5,30 +5,27 @@ export interface SelectedDepsProps {
   onRemove: (id: string) => void;
 }
 
-/** Removable chips summarising the current dependency selection. */
 export function SelectedDeps({ dependencies, onRemove }: SelectedDepsProps) {
   if (dependencies.length === 0) {
-    return (
-      <p className="subtle" style={{ fontSize: 12.5 }}>
-        No dependencies selected yet.
-      </p>
-    );
+    return null;
   }
 
   return (
-    <div className="chips">
+    <div className="flex flex-wrap gap-2 mb-4">
       {dependencies.map(dep => (
-        <span key={dep.id} className="chip">
-          {dep.name}
+        <div key={dep.id} className="bg-pixel-orange border-2 border-black flex items-center shadow-[2px_2px_0px_#000]">
+          <span className="font-mono text-xs font-bold text-black px-2 py-1 border-r-2 border-black">
+            {dep.name}
+          </span>
           <button
             type="button"
-            className="chip-remove"
+            className="w-6 h-full flex items-center justify-center hover:bg-black/20 text-black font-bold font-mono transition-colors"
             onClick={() => onRemove(dep.id)}
             aria-label={`Remove ${dep.name}`}
           >
             ×
           </button>
-        </span>
+        </div>
       ))}
     </div>
   );

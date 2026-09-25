@@ -17,10 +17,6 @@ const MODES: { id: DirectoryMode; title: string; sub?: string }[] = [
   { id: 'chooseFolder', title: 'Choose a folder' },
 ];
 
-/**
- * Output-location chooser. Renders the mode options as a radio list, then
- * reveals only the field relevant to the chosen mode.
- */
 export function DirectoryPicker({
   mode,
   path,
@@ -32,73 +28,80 @@ export function DirectoryPicker({
   workspaceFolder,
 }: DirectoryPickerProps) {
   return (
-    <div className="stack">
-      <fieldset className="field" style={{ border: 'none', margin: 0, padding: 0 }}>
-        <legend className="field-label" style={{ padding: 0 }}>
-          Output location
-        </legend>
-        <div className="option-list">
-          {MODES.map(option => {
-            const selected = mode === option.id;
-            return (
-              <label
-                key={option.id}
-                className={`option ${selected ? 'is-selected' : ''}`}
-              >
-                <input
-                  type="radio"
-                  className="option-input"
-                  name="directoryMode"
-                  value={option.id}
-                  checked={selected}
-                  onChange={() => onModeChange(option.id)}
-                />
-                <span className="option-text">
-                  <span className="option-title">{option.title}</span>
-                  {option.id === 'workspace' && workspaceFolder && (
-                    <span className="option-sub">{workspaceFolder}</span>
-                  )}
-                </span>
-              </label>
-            );
-          })}
-        </div>
-      </fieldset>
+    <div className="mt-2">
+      <label className="font-pixel text-xs font-bold text-black block mb-1.5">
+        Output location
+      </label>
+      <div aria-label="Output Location" className="grid grid-cols-1 md:grid-cols-3 gap-3" role="radiogroup">
+        {MODES.map(option => {
+          const selected = mode === option.id;
+          return (
+            <div
+              key={option.id}
+              aria-checked={selected}
+              className={`${selected ? 'bg-pixel-mint' : 'bg-[#faf6ee] hover:bg-amber-50'} border-2 border-black p-2.5 flex items-center gap-3 shadow-[2px_2px_0px_#000] cursor-pointer transition-colors`}
+              role="radio"
+              tabIndex={0}
+              onClick={() => onModeChange(option.id)}
+            >
+              <div className="w-4 h-4 rounded-full border-2 border-black flex items-center justify-center flex-shrink-0 bg-transparent">
+                {selected && <div className="w-2 h-2 rounded-full bg-black"></div>}
+              </div>
+              <div className="leading-tight overflow-hidden">
+                <div className={`text-xs font-mono font-bold text-black ${!selected && 'font-medium'}`}>
+                  {option.title}
+                </div>
+                {option.id === 'workspace' && workspaceFolder && (
+                  <div className="text-[11px] font-mono text-gray-900 truncate">
+                    {workspaceFolder}
+                  </div>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
 
       {mode === 'newFolder' && (
-        <label className="field">
-          <span className="field-label">
-            Folder name
-            <span className="field-hint">Created inside the workspace</span>
-          </span>
+        <div className="mt-4">
+          <div className="flex justify-between items-baseline mb-1">
+            <label className="font-pixel text-xs font-bold text-black">Folder name</label>
+            <span className="text-[11px] text-gray-600 font-mono">Created inside the workspace</span>
+          </div>
           <input
             type="text"
-            className="control"
+            className="w-full bg-[#faf6ee] border-2 border-black px-3 py-1.5 font-mono text-sm text-black focus:outline-none focus:ring-0 focus:border-black shadow-[2px_2px_0px_#000]"
             value={newFolderName}
             onChange={e => onFolderNameChange(e.target.value)}
             placeholder="my-project"
             spellCheck={false}
           />
-        </label>
+        </div>
       )}
 
       {mode === 'chooseFolder' && (
-        <label className="field">
-          <span className="field-label">Target folder</span>
-          <span className="path-row">
+        <div className="mt-4">
+          <div className="flex justify-between items-baseline mb-1">
+            <label className="font-pixel text-xs font-bold text-black">Target folder</label>
+          </div>
+          <div className="flex">
             <input
               type="text"
-              className="control"
+              className="w-full bg-[#faf6ee] border-2 border-black border-r-0 px-3 py-1.5 font-mono text-sm text-black focus:outline-none focus:ring-0 focus:border-black shadow-[2px_2px_0px_#000]"
               value={path}
               onChange={e => onPathChange(e.target.value)}
               placeholder="/path/to/folder"
               spellCheck={false}
             />
-            <button type="button" className="btn btn-ghost" onClick={onBrowseClick}>
+            <button
+              type="button"
+              className="bg-pixel-mint hover:bg-emerald-400 border-2 border-black px-4 py-1.5 font-mono text-xs font-bold text-black flex items-center justify-center shadow-[2px_2px_0px_#000]"
+              onClick={onBrowseClick}
+            >
               Browse…
             </button>
-          </span>
-        </label>
+          </div>
+        </div>
       )}
     </div>
   );
