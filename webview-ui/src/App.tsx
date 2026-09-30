@@ -107,15 +107,6 @@ export default function App() {
       <header className="bg-[#fdfaf6] border-hard-3 shadow-hard-sm flex items-center justify-between px-3 py-2.5 shrink-0">
         <div className="flex items-center gap-3.5">
           <div className="w-12 h-12 bg-[#ff2a8d] border-hard-2 flex items-center justify-center shadow-[2px_2px_0px_#000]">
-            {/* <svg className="w-8 h-8 fill-black" viewBox="0 0 16 16" shapeRendering="crispEdges">
-              <rect x="5" y="2" width="3" height="1"></rect><rect x="4" y="3" width="5" height="1"></rect>
-              <rect x="3" y="4" width="6" height="1"></rect><rect x="2" y="5" width="7" height="1"></rect>
-              <rect x="2" y="6" width="7" height="1"></rect><rect x="2" y="7" width="6" height="1"></rect>
-              <rect x="3" y="8" width="5" height="1"></rect><rect x="4" y="9" width="4" height="1"></rect>
-              <rect x="5" y="10" width="3" height="1"></rect><rect x="6" y="11" width="2" height="1"></rect>
-              <rect x="7" y="12" width="1" height="1"></rect>
-              <rect x="7" y="4" width="1" height="1" fill="#ff2a8d"></rect><rect x="6" y="6" width="1" height="1" fill="#ff2a8d"></rect>
-            </svg> */}
             <img src={logo} alt="" />
           </div>
           <div>

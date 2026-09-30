@@ -1,6 +1,6 @@
 {
   "name": "spring-boot-initializer",
-  "displayName": "Spring Boot Initializer",
+  "displayName": "Spring App Generator",
   "description": "Create Spring Boot projects without leaving VS Code",
   "version": "0.1.0",
   "publisher": "your-publisher-name",
@@ -33,19 +33,47 @@
     "backend"
   ],
   "activationEvents": [
-    "onCommand:springBootInitializer.initialize"
+    "onView:springAppGeneratorWelcome"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "springBootInitializer.initialize",
-        "title": "Spring Boot: Initialize Spring Boot",
-        "category": "Spring Boot"
+        "title": "Create Spring Boot Project",
+        "category": "Spring Boot",
+        "icon": {
+          "light": "media/icon.png",
+          "dark": "media/icon.png"
+        }
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "spring-app-generator",
+          "title": "Spring App Generator",
+          "icon": "media/spring-leaf.svg"
+        }
+      ]
+    },
+    "views": {
+      "spring-app-generator": [
+        {
+          "id": "springAppGeneratorWelcome",
+          "name": "Spring App Generator",
+          "visibility": "visible"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "springAppGeneratorWelcome",
+        "contents": "Create a new Spring Boot project with a beautiful visual interface.\n[Create Spring Boot Project](command:springBootInitializer.initialize)\nYou can also use the command palette (Ctrl+Shift+P) and search for \"Create Spring Boot Project\"."
       }
     ],
     "configuration": {
-      "title": "Spring Boot Initializer",
+      "title": "Spring App Generator",
       "properties": {
         "springBootInitializer.initializrUrl": {
           "type": "string",

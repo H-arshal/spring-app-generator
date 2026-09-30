@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Leaf shape -->
+  <path d="M20.5 3.5c-4.5 0-9 2-12 5.5S4 17.5 4 20.5c3 0 7.5-.5 11-3.5s5.5-8 5.5-13.5z" fill="currentColor" opacity="0.15"/>
+  <path d="M20.5 3.5c-4.5 0-9 2-12 5.5S4 17.5 4 20.5c3 0 7.5-.5 11-3.5s5.5-8 5.5-13.5z"/>
+  <!-- Stem -->
+  <path d="M4 20.5L12.5 12"/>
+</svg>

@@ -17,6 +17,14 @@
         },
         {
             "type": "npm",
+            "script": "compile",
+            "problemMatcher": [
+                "$tsc"
+            ],
+            "group": "build"
+        },
+        {
+            "type": "npm",
             "script": "watch:webview",
             "isBackground": true,
             "presentation": {

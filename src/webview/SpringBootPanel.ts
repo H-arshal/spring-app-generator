@@ -28,7 +28,7 @@ export class SpringBootPanel {
 
         const panel = vscode.window.createWebviewPanel(
             'springBootInitializer',
-            '🌱 Spring Boot Initializer',
+            'Spring App Generator',
             column || vscode.ViewColumn.One,
             {
                 enableScripts: true,
@@ -122,13 +122,17 @@ export class SpringBootPanel {
         content="
             default-src 'none';
             script-src 'nonce-${nonce}';
-            style-src ${cspSource} 'unsafe-inline';
+            style-src ${cspSource} 'unsafe-inline' https://fonts.googleapis.com;
             img-src ${cspSource} https: data:;
-            font-src ${cspSource};
+            font-src ${cspSource} https://fonts.gstatic.com;
+            connect-src https://start.spring.io https://*.spring.io;
         "
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&family=Silkscreen:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=VT323&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="${styleUri}" />
-    <title>Spring Boot Initializer</title>
+    <title>Spring App Generator</title>
 </head>
 <body>
     <div id="root"></div>
