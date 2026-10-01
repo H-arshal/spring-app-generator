@@ -35,14 +35,19 @@ export function DirectoryPicker({
       <div aria-label="Output Location" className="grid grid-cols-1 md:grid-cols-3 gap-3" role="radiogroup">
         {MODES.map(option => {
           const selected = mode === option.id;
+          const isDisabled = !workspaceFolder && option.id !== 'chooseFolder';
+          
           return (
             <div
               key={option.id}
               aria-checked={selected}
-              className={`${selected ? 'bg-pixel-mint' : 'bg-[#faf6ee] hover:bg-amber-50'} border-2 border-black p-2.5 flex items-center gap-3 shadow-[2px_2px_0px_#000] cursor-pointer transition-colors`}
+              aria-disabled={isDisabled}
+              className={`${selected ? 'bg-pixel-mint' : (isDisabled ? 'bg-gray-100 opacity-50 cursor-not-allowed' : 'bg-[#faf6ee] hover:bg-amber-50')} border-2 border-black p-2.5 flex items-center gap-3 shadow-[2px_2px_0px_#000] transition-colors ${!isDisabled ? 'cursor-pointer' : ''}`}
               role="radio"
-              tabIndex={0}
-              onClick={() => onModeChange(option.id)}
+              tabIndex={isDisabled ? -1 : 0}
+              onClick={() => {
+                if (!isDisabled) onModeChange(option.id);
+              }}
             >
               <div className="w-4 h-4 rounded-full border-2 border-black flex items-center justify-center flex-shrink-0 bg-transparent">
                 {selected && <div className="w-2 h-2 rounded-full bg-black"></div>}
@@ -55,6 +60,11 @@ export function DirectoryPicker({
                   <div className="text-[11px] font-mono text-gray-900 truncate">
                     {workspaceFolder}
                   </div>
+                )}
+                {isDisabled && option.id === 'workspace' && (
+                   <div className="text-[10px] font-mono text-red-500 font-bold">
+                     No workspace open
+                   </div>
                 )}
               </div>
             </div>

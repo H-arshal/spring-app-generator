@@ -51,6 +51,7 @@ export default function App() {
       if (!c.name) return 'Name is required';
       if (!c.packageName) return 'Package Name is required';
       if (dirMode === 'chooseFolder' && !dirPath) return 'Directory path is required';
+      if ((dirMode === 'workspace' || dirMode === 'newFolder') && !workspaceFolder) return 'No workspace open. Choose a folder.';
     }
     return null;
   }, [stepIndex, projectConfig.config, dirMode, dirPath]);
@@ -67,7 +68,9 @@ export default function App() {
     return messageService.onMessage(msg => {
       if (msg.type === 'WORKSPACE_INFO') {
         setWorkspaceFolder(msg.payload.workspaceFolder);
-        if (msg.payload.projectName) {
+        if (!msg.payload.workspaceFolder) {
+          setDirMode('chooseFolder');
+        } else if (msg.payload.projectName) {
           setFolderName(prev => prev || msg.payload.projectName!);
         }
       } else if (msg.type === 'FOLDER_SELECTED') {
