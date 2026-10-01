@@ -78,7 +78,12 @@ code --install-extension spring-boot-initializer-1.0.0.vsix
 
 ## Screenshots
 
-> Screenshots will be added after the UI is implemented.
+<div align="center">
+  <img src="screenshots/Screenshot-01.png" alt="Platform Selection" width="48%">
+  <img src="screenshots/Screenshot-02.png" alt="Project Details" width="48%">
+  <img src="screenshots/Screenshot-03.png" alt="Dependencies" width="48%">
+  <img src="screenshots/Screenshot-04.png" alt="Review & Generate" width="48%">
+</div>
 
 ---
 
