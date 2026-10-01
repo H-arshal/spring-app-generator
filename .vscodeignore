@@ -1,0 +1,16 @@
+.vscode/**
+.vscode-test/**
+src/**
+test/**
+tsconfig.json
+design/**
+docs/**
+context.md
+.gitignore
+*.log
+
+webview-ui/**
+!webview-ui/build
+!webview-ui/build/**
+
+**/*.map

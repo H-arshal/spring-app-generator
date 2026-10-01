@@ -22,16 +22,62 @@ export function Stepper({
   variant = 'rail',
 }: StepperProps) {
   if (variant === 'compact') {
-    return null; // The neo-brutalist design doesn't use the horizontal compact stepper inside the stage, we handle it in sidebar
+    return null; // The neo-brutalist design doesn't use the horizontal compact stepper inside the stage
   }
 
   return (
-    <aside className="w-full md:w-64 shrink-0 bg-[#fdfaf6] border-hard-3 flex flex-col justify-between relative overflow-hidden min-h-[530px]" data-purpose="step-navigation">
-      <div className="p-3.5">
-        <div className="font-pixel font-bold text-xs uppercase tracking-wider text-black mb-3">
-          SETUP
+    <aside 
+      className="w-full md:w-64 shrink-0 bg-[#fdfaf6] border-hard-3 flex flex-col md:justify-between relative overflow-hidden md:min-h-[530px]" 
+      data-purpose="step-navigation"
+    >
+      <div className="p-2.5 md:p-3.5">
+        <div className="font-pixel font-bold text-[11px] md:text-xs uppercase tracking-wider text-black mb-2 md:mb-3 flex items-center justify-between">
+          <span>SETUP</span>
+          <span className="font-mono text-[10px] font-bold text-neutral-500 md:hidden">
+            Step {currentIndex + 1} of {steps.length}
+          </span>
         </div>
-        <nav aria-label="Setup Steps" className="space-y-3 relative z-10">
+
+        {/* Mobile / Narrow Screen: Horizontal Step Bar */}
+        <nav aria-label="Setup Steps Mobile" className="grid grid-cols-4 gap-1.5 md:hidden relative z-10">
+          {steps.map((step, index) => {
+            const isActive = index === currentIndex;
+            const isDone = index < currentIndex;
+            const isReachable = index <= furthestIndex;
+            const stepColor = STEP_COLORS[index % STEP_COLORS.length];
+
+            return (
+              <button
+                key={step.id}
+                type="button"
+                onClick={() => isReachable && onSelect(index)}
+                disabled={!isReachable}
+                className={`p-1.5 flex flex-col items-center justify-center gap-1 border-2 text-center transition-all ${
+                  isActive
+                    ? 'step-active-gradient border-black shadow-[2px_2px_0px_#000] font-bold'
+                    : isReachable
+                    ? 'bg-white border-black/20 hover:border-black cursor-pointer'
+                    : 'bg-neutral-100 border-transparent opacity-50 cursor-not-allowed'
+                }`}
+              >
+                <div
+                  className="w-6 h-6 border-hard-2 flex items-center justify-center font-bold text-xs text-black shrink-0"
+                  style={{ backgroundColor: isDone ? '#5be8b5' : isActive ? 'transparent' : stepColor }}
+                >
+                  {isDone ? '✓' : index + 1}
+                </div>
+                <div className="w-full overflow-hidden">
+                  <div className="font-display font-bold text-[10px] text-black leading-tight truncate">
+                    {step.label}
+                  </div>
+                </div>
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* Desktop View: Vertical Step Sidebar */}
+        <nav aria-label="Setup Steps Desktop" className="hidden md:block space-y-3 relative z-10">
           {steps.map((step, index) => {
             const isActive = index === currentIndex;
             const isDone = index < currentIndex;
@@ -82,7 +128,8 @@ export function Stepper({
         </nav>
       </div>
       
-      <div aria-hidden="true" className="relative w-full h-32 pointer-events-none self-end mt-auto" data-purpose="pixel-staircase">
+      {/* Decorative Pixel Staircase - Desktop Only */}
+      <div aria-hidden="true" className="hidden md:block relative w-full h-32 pointer-events-none self-end mt-auto" data-purpose="pixel-staircase">
         <div className="absolute bottom-0 left-0 w-5 h-28 bg-black"></div>
         <div className="absolute bottom-0 left-5 w-5 h-20 bg-black"></div>
         <div className="absolute bottom-10 left-0 w-5 h-5 bg-[#ff6347]"></div>

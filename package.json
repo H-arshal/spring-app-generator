@@ -3,17 +3,17 @@
   "displayName": "Spring App Generator",
   "description": "Create Spring Boot projects without leaving VS Code",
   "version": "0.1.0",
-  "publisher": "your-publisher-name",
+  "publisher": "Harshal",
   "license": "MIT",
   "icon": "media/icon.png",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/spring-boot-initializer-vscode.git"
+    "url": "https://github.com/H-arshal/spring-app-generator.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/spring-boot-initializer-vscode/issues"
+    "url": "https://github.com/H-arshal/spring-app-generator/issues"
   },
-  "homepage": "https://github.com/your-username/spring-boot-initializer-vscode#readme",
+  "homepage": "https://github.com/H-arshal/spring-app-generator#readme",
   "engines": {
     "vscode": "^1.85.0"
   },

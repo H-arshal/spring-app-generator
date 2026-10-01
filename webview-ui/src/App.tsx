@@ -11,7 +11,8 @@ import { ProjectPage } from './pages/ProjectPage';
 import { DetailsPage } from './pages/DetailsPage';
 import { ReviewPage } from './pages/ReviewPage';
 import { DependenciesPage } from './pages/DependenciesPage';
-import logo from './assets/logo.png'
+import logo from './assets/logo.png';
+import springLeaf from './assets/spring-leaf.svg';
 
 const STEPS: StepDef[] = [
   { id: 'project', label: 'Platform', meta: 'Runtime & build tool' },
@@ -107,7 +108,14 @@ export default function App() {
       <header className="bg-[#fdfaf6] border-hard-3 shadow-hard-sm flex items-center justify-between px-3 py-2.5 shrink-0">
         <div className="flex items-center gap-3.5">
           <div className="w-12 h-12 bg-[#ff2a8d] border-hard-2 flex items-center justify-center shadow-[2px_2px_0px_#000]">
-            <img src={logo} alt="" />
+            <img 
+              src={logo} 
+              alt="Spring Logo" 
+              className="w-8 h-8 object-contain"
+              onError={(e) => {
+                e.currentTarget.src = springLeaf;
+              }} 
+            />
           </div>
           <div>
             <h1 className="font-pixel text-lg md:text-xl font-bold tracking-tight text-black leading-none">Spring App Generator</h1>
