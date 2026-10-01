@@ -1,9 +1,9 @@
 {
   "name": "spring-boot-initializer",
-  "displayName": "Spring App Generator",
-  "description": "Create Spring Boot projects without leaving VS Code",
+  "displayName": "Spring Boot Initializer & Generator",
+  "description": "Create and configure Spring Boot projects directly inside VS Code. The ultimate native Spring Initializr experience.",
   "version": "0.1.0",
-  "publisher": "Harshal",
+  "publisher": "HarshalMoon",
   "license": "MIT",
   "icon": "media/icon.png",
   "repository": {
@@ -23,14 +23,11 @@
     "Snippets"
   ],
   "keywords": [
-    "spring",
     "spring boot",
-    "spring initializer",
     "spring initializr",
     "java",
     "maven",
-    "gradle",
-    "backend"
+    "project generator"
   ],
   "activationEvents": [
     "onView:springAppGeneratorWelcome"
