@@ -36,6 +36,27 @@ export default function App() {
   const [folderName, setFolderName] = useState('');
   const [workspaceFolder, setWorkspaceFolder] = useState<string | undefined>();
 
+  const validationError = useMemo(() => {
+    const c = projectConfig.config;
+    if (stepIndex === 0) {
+      if (!c.projectType) return 'Project Type is required';
+      if (!c.language) return 'Language is required';
+      if (!c.bootVersion) return 'Spring Boot version is required';
+      if (!c.packaging) return 'Packaging is required';
+      if (!c.javaVersion) return 'Java version is required';
+    }
+    if (stepIndex === 1) {
+      if (!c.groupId) return 'Group ID is required';
+      if (!c.artifactId) return 'Artifact ID is required';
+      if (!c.name) return 'Name is required';
+      if (!c.packageName) return 'Package Name is required';
+      if (dirMode === 'chooseFolder' && !dirPath) return 'Directory path is required';
+    }
+    return null;
+  }, [stepIndex, projectConfig.config, dirMode, dirPath]);
+
+  const isCurrentStepValid = validationError === null;
+
   useEffect(() => {
     if (!folderName && projectConfig.config.artifactId) {
       setFolderName(projectConfig.config.artifactId);
@@ -57,11 +78,16 @@ export default function App() {
   }, [messageService]);
 
   const goTo = (index: number) => {
+    if (index > stepIndex && !isCurrentStepValid) return; // Prevent jumping ahead if current is invalid
     setStepIndex(index);
     setFurthestIndex(prev => Math.max(prev, index));
   };
 
-  const handleNext = () => goTo(Math.min(stepIndex + 1, STEPS.length - 1));
+  const handleNext = () => {
+    if (isCurrentStepValid) {
+      goTo(Math.min(stepIndex + 1, STEPS.length - 1));
+    }
+  };
   const handleBack = () => goTo(Math.max(stepIndex - 1, 0));
 
   const resolveTargetPath = (): string => {
@@ -107,11 +133,11 @@ export default function App() {
     <main className="w-full min-w-0 min-h-0 max-w-[1240px] flex flex-col gap-4 flex-1" data-purpose="app-shell">
       <header className="bg-[#fdfaf6] border-hard-3 shadow-hard-sm flex items-center justify-between px-3 py-2.5 shrink-0">
         <div className="flex items-center gap-3.5">
-          <div className="w-12 h-12 bg-[#ff2a8d] border-hard-2 flex items-center justify-center shadow-[2px_2px_0px_#000]">
+          <div className="w-12 h-12 bg-white border-hard-2 flex items-center justify-center shadow-[2px_2px_0px_#000] overflow-hidden">
             <img 
               src={logo} 
-              alt="Spring Logo" 
-              className="w-8 h-8 object-contain"
+              alt="Spring App Generator Logo" 
+              className="w-11 h-11 object-contain"
               onError={(e) => {
                 e.currentTarget.src = springLeaf;
               }} 
@@ -142,14 +168,21 @@ export default function App() {
         </section>
       </div>
 
-      <footer className="bg-[#fdfaf6] border-hard-3 shadow-hard-sm flex flex-col sm:flex-row items-center justify-between px-3.5 py-2.5 gap-3 shrink-0">
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          <div className="border-hard-2 px-1.5 py-0.5 bg-white font-mono font-bold text-xs">&gt;_</div>
-          <div className="font-mono text-xs md:text-sm font-medium text-neutral-900 flex items-center gap-2">
-            <span>{STEPS[stepIndex].label} configuration</span>
-            <span className="text-neutral-400">•</span>
-            <span>Changes apply immediately</span>
+      <footer className="bg-[#fdfaf6] border-hard-3 shadow-hard-sm flex flex-col lg:flex-row items-center justify-between px-3.5 py-2.5 gap-3 shrink-0">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full lg:w-auto">
+          <div className="flex items-center gap-3">
+            <div className="border-hard-2 px-1.5 py-0.5 bg-white font-mono font-bold text-xs">&gt;_</div>
+            <div className="font-mono text-xs md:text-sm font-medium text-neutral-900 flex items-center gap-2">
+              <span>{STEPS[stepIndex].label} configuration</span>
+              <span className="text-neutral-400 hidden sm:inline">•</span>
+              <span className="hidden sm:inline">Changes apply immediately</span>
+            </div>
           </div>
+          {!isCurrentStepValid && (
+            <div className="font-mono text-xs font-bold text-[#ff2a8d] sm:ml-4 flex items-center gap-1.5">
+              <span className="animate-pulse">⚠</span> {validationError}
+            </div>
+          )}
         </div>
         <div className="flex gap-2 w-full sm:w-auto">
           {stepIndex > 0 && (
@@ -158,11 +191,27 @@ export default function App() {
             </button>
           )}
           {!isLastStep ? (
-            <button onClick={handleNext} disabled={isGenerating} className="flex-1 sm:flex-none bg-[#5be8b5] hover:bg-[#4edaa7] border-hard-2 px-8 py-2 font-display font-extrabold text-sm md:text-base text-black flex items-center justify-center gap-2 shadow-[2.5px_2.5px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">
+            <button 
+              onClick={handleNext} 
+              disabled={isGenerating || !isCurrentStepValid} 
+              className={`flex-1 sm:flex-none border-hard-2 px-8 py-2 font-display font-extrabold text-sm md:text-base text-black flex items-center justify-center gap-2 transition-all ${
+                isCurrentStepValid && !isGenerating 
+                  ? 'bg-[#5be8b5] hover:bg-[#4edaa7] shadow-[2.5px_2.5px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none' 
+                  : 'bg-neutral-300 opacity-50 cursor-not-allowed'
+              }`}
+            >
               <span>Continue</span><span className="text-lg leading-none">→</span>
             </button>
           ) : (
-            <button onClick={handleGenerate} disabled={isGenerating} className="flex-1 sm:flex-none bg-[#5be8b5] hover:bg-[#4edaa7] border-hard-2 px-8 py-2 font-display font-extrabold text-sm md:text-base text-black flex items-center justify-center gap-2 shadow-[2.5px_2.5px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all">
+            <button 
+              onClick={handleGenerate} 
+              disabled={isGenerating || !isCurrentStepValid} 
+              className={`flex-1 sm:flex-none border-hard-2 px-8 py-2 font-display font-extrabold text-sm md:text-base text-black flex items-center justify-center gap-2 transition-all ${
+                isCurrentStepValid && !isGenerating 
+                  ? 'bg-[#5be8b5] hover:bg-[#4edaa7] shadow-[2.5px_2.5px_0px_#000] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none' 
+                  : 'bg-neutral-300 opacity-50 cursor-not-allowed'
+              }`}
+            >
               {isGenerating ? 'Generating...' : 'Generate Project'}
             </button>
           )}

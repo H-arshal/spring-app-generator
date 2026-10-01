@@ -159,8 +159,8 @@ vsce --version   # npm install -g @vscode/vsce
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/spring-boot-initializer-vscode.git
-cd spring-boot-initializer-vscode
+git clone https://github.com/H-arshal/spring-app-generator.git
+cd spring-app-generator
 
 # Install extension host dependencies
 npm install
