@@ -76,16 +76,8 @@ export function isSafePath(resolvedBase: string, entryName: string): boolean {
     return resolved.startsWith(base) || resolved === resolvedBase;
 }
 
-/**
- * Strips the top-level project folder from Spring Initializr ZIP entries.
- * Spring Initializr wraps everything in a top-level folder (e.g. "demo/").
- * We extract the contents directly into the target directory.
- */
 function normalizeEntryName(entryName: string): string {
-    const parts = entryName.replace(/\\/g, '/').split('/');
-    // Remove leading empty segments and the top-level project folder
-    if (parts.length > 1) {
-        return parts.slice(1).join('/');
-    }
-    return entryName;
+    // Spring Initializr API does not wrap files in a top-level folder by default
+    // unless baseDir is provided. So we just normalize the separators.
+    return entryName.replace(/\\/g, '/');
 }

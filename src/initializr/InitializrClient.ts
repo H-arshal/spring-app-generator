@@ -141,7 +141,13 @@ export class InitializrClient {
         
         params.set('type', config.projectType);
         params.set('language', config.language);
-        params.set('bootVersion', config.bootVersion);
+        
+        let bootVersion = config.bootVersion;
+        // Spring Initializr API often returns .RELEASE in metadata but requires it stripped to resolve on Maven Central
+        if (bootVersion.endsWith('.RELEASE')) {
+            bootVersion = bootVersion.replace(/\.RELEASE$/, '');
+        }
+        params.set('bootVersion', bootVersion);
         params.set('groupId', config.groupId);
         params.set('artifactId', config.artifactId);
         params.set('name', config.name);
