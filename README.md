@@ -275,23 +275,20 @@ Please read [`docs/Design.md`](./docs/Design.md) before contributing to understa
 
 ## Roadmap
 
-### 1.0.0 — MVP (current target)
+### 1.0.0 & 1.1.0 — Architecture & Scaffolding (Current)
 - Native Initializr UI inside VS Code
-- Full project configuration
-- Dependency search and selection
+- Full project configuration & Dependency search
+- **Architecture Templates** (Minimal, Layered, REST API)
+- **Scaffolding Engine** (Auto-generates working CRUD modules, Entities, Repositories, Services, and Controllers)
 - Safe project generation and extraction
-- Workspace integration
 
-### 1.1.0 — Productivity
+### 1.2.0 — Productivity
 - Recent configurations
 - Saved project presets
 - Manual metadata refresh command
 
-### 1.2.0 — Spring Project Management
-- Add dependency to existing project
-- Dependency management
-
 ### Future
+- Add dependency to existing project
 - AI-assisted configuration (natural language → suggested dependencies)
 
 ---
