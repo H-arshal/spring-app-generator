@@ -32,6 +32,14 @@ const FALLBACK: Omit<ProjectConfigState, 'packageNameEditing'> = {
   description: '',
   packageName: 'com.example.demo',
   dependencies: [],
+  scaffoldEntity: '',
+  architecture: {
+    type: 'rest-api',
+    globalExceptionHandler: true,
+    dto: true,
+    validation: true,
+    apiResponse: true,
+  },
 };
 
 function seedFromMetadata(metadata: InitializrMetadata | null): ProjectConfigState {
@@ -53,6 +61,7 @@ function seedFromMetadata(metadata: InitializrMetadata | null): ProjectConfigSta
     description: '',
     packageName: `${groupId}.${derivePackageSuffix(artifactId)}`,
     dependencies: [],
+    architecture: FALLBACK.architecture,
     packageNameEditing: false,
   };
 }
@@ -81,7 +90,31 @@ export function useProjectConfig(metadata: InitializrMetadata | null): ProjectCo
 
   const updateField = useCallback(
     <K extends keyof ProjectConfigState>(field: K, value: ProjectConfigState[K]) => {
-      setConfig(prev => ({ ...prev, [field]: value }));
+      setConfig(prev => {
+        const next = { ...prev, [field]: value };
+        
+        // Auto-select dependencies in UI if scaffolding is enabled
+        if (field === 'scaffoldEntity' && typeof value === 'string' && value.trim().length > 0) {
+          const deps = new Set(next.dependencies);
+          deps.add('web');
+          deps.add('data-jpa');
+          deps.add('h2');
+          if (next.architecture.validation) deps.add('validation');
+          next.dependencies = Array.from(deps);
+        }
+        
+        // Auto-select validation dependency if architecture validation is toggled on
+        if (field === 'architecture') {
+          const arch = value as ProjectConfigState['architecture'];
+          if (arch.validation && next.scaffoldEntity && next.scaffoldEntity.trim().length > 0) {
+            const deps = new Set(next.dependencies);
+            deps.add('validation');
+            next.dependencies = Array.from(deps);
+          }
+        }
+
+        return next;
+      });
     },
     []
   );

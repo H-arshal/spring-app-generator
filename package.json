@@ -2,7 +2,7 @@
   "name": "spring-boot-initializer",
   "displayName": "Spring Boot Initializer & Generator",
   "description": "Create and configure Spring Boot projects directly inside VS Code. The ultimate native Spring Initializr experience.",
-  "version": "0.1.4",
+  "version": "1.1.0",
   "publisher": "HarshalMoon",
   "license": "MIT",
   "icon": "media/icon.png",

@@ -172,6 +172,16 @@ export type HostMessage =
 // Payload / data interfaces
 // ---------------------------------------------------------------------------
 
+export type ArchitectureType = 'minimal' | 'layered' | 'rest-api';
+
+export interface ArchitectureConfig {
+  type: ArchitectureType;
+  globalExceptionHandler: boolean;
+  dto: boolean;
+  validation: boolean;
+  apiResponse: boolean;
+}
+
 export interface ProjectConfiguration {
   bootVersion: string;
   language: string;
@@ -184,6 +194,8 @@ export interface ProjectConfiguration {
   description: string;
   packageName: string;
   dependencies: string[];
+  architecture: ArchitectureConfig;
+  scaffoldEntity?: string;
 }
 
 export interface GenerationPayload extends ProjectConfiguration {

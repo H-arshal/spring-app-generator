@@ -49,6 +49,18 @@ export class ProjectService {
 
         // ── Step 3/4: Generate + download ────────────────────────────────────
         this._progress(3);
+        
+        // Auto-inject required dependencies for scaffolding
+        if (request.scaffoldEntity && request.scaffoldEntity.trim().length > 0) {
+            const deps = new Set(request.dependencies);
+            deps.add('web');
+            deps.add('data-jpa');
+            deps.add('h2'); // good default for instant run
+            if (request.architecture.validation) deps.add('validation');
+            request.dependencies = Array.from(deps);
+            Logger.info('Auto-injected dependencies for scaffolding: web, data-jpa, h2, validation');
+        }
+
         const zipBytes = await client.generateProject(request);
         this._progress(4);
         this._checkCancelled();
@@ -71,6 +83,14 @@ export class ProjectService {
         this._progress(5);
         try {
             this._writtenFiles = await extractZip(zipBytes, targetPath);
+            
+            // Apply Architecture & Boilerplate
+            const { ArchitectureService } = await import('./ArchitectureService');
+            await ArchitectureService.applyArchitecture(targetPath, request);
+            
+            // Scaffolding Engine
+            const { ScaffoldingService } = await import('./ScaffoldingService');
+            await ScaffoldingService.generateCrudModule(targetPath, request);
         } catch (err) {
             // Clean up any partial writes before re-throwing
             await cleanupFiles(this._writtenFiles, targetPath);

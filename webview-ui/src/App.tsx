@@ -9,6 +9,7 @@ import { Stepper, ProgressView, ErrorView, Modal } from './components';
 import type { StepDef } from './components';
 import { ProjectPage } from './pages/ProjectPage';
 import { DetailsPage } from './pages/DetailsPage';
+import { ArchitecturePage } from './pages/ArchitecturePage';
 import { ReviewPage } from './pages/ReviewPage';
 import { DependenciesPage } from './pages/DependenciesPage';
 import logo from './assets/logo.png';
@@ -17,6 +18,7 @@ import springLeaf from './assets/spring-leaf.svg';
 const STEPS: StepDef[] = [
   { id: 'project', label: 'Platform', meta: 'Runtime & build tool' },
   { id: 'details', label: 'Details', meta: 'Coordinates & output' },
+  { id: 'architecture', label: 'Architecture', meta: 'Structure & code' },
   { id: 'dependencies', label: 'Dependencies', meta: 'Starters & libraries' },
   { id: 'review', label: 'Review', meta: 'Confirm & generate' },
 ];
@@ -166,8 +168,9 @@ export default function App() {
         <section className="flex-grow min-w-0 min-h-0 bg-[#fdfaf6] border-hard-3 p-5 md:p-7 relative flex flex-col overflow-y-auto overflow-x-hidden">
           {stepIndex === 0 && <ProjectPage metadata={metadata.metadata} config={projectConfig} />}
           {stepIndex === 1 && <DetailsPage config={projectConfig} directory={{ mode: dirMode, path: dirPath, newFolderName: folderName, workspaceFolder }} onDirectoryModeChange={setDirMode} onDirectoryPathChange={setDirPath} onFolderNameChange={setFolderName} onBrowse={handleBrowse} />}
-          {stepIndex === 2 && <DependenciesPage metadata={metadata.metadata} config={projectConfig} />}
-          {stepIndex === 3 && <ReviewPage metadata={metadata.metadata} config={projectConfig} />}
+          {stepIndex === 2 && <ArchitecturePage config={projectConfig} />}
+          {stepIndex === 3 && <DependenciesPage metadata={metadata.metadata} config={projectConfig} />}
+          {stepIndex === 4 && <ReviewPage metadata={metadata.metadata} config={projectConfig} />}
         </section>
       </div>
 
