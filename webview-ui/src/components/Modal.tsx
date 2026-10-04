@@ -37,25 +37,31 @@ export function Modal({
 
   return (
     <div
-      className="scrim"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
       onMouseDown={e => {
         if (dismissible && e.target === e.currentTarget) onClose?.();
       }}
     >
       <div
         ref={panelRef}
-        className="modal"
+        className="bg-[#fdfaf6] border-[3.5px] border-black shadow-[8px_8px_0px_#000] max-w-lg w-full flex flex-col focus:outline-none max-h-full"
         role="dialog"
         aria-modal="true"
         aria-label={title}
         tabIndex={-1}
       >
-        <div className="modal-head">
-          {icon}
-          <span className="modal-title">{title}</span>
+        <div className="bg-[#5be8b5] border-b-[3.5px] border-black px-4 py-3 flex items-center gap-3">
+          {icon && <div className="text-black text-xl">{icon}</div>}
+          <span className="font-pixel text-black font-bold text-lg uppercase tracking-wider">{title}</span>
         </div>
-        <div className="modal-body">{children}</div>
-        {footer && <div className="modal-foot">{footer}</div>}
+        <div className="p-6 overflow-y-auto font-mono text-black">
+          {children}
+        </div>
+        {footer && (
+          <div className="border-t-[3.5px] border-black p-4 bg-gray-50 flex justify-end">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );

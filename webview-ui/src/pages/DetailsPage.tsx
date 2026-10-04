@@ -75,26 +75,28 @@ export function DetailsPage({
             value={cfg.groupId}
             onChange={setGroupId}
             placeholder="com.example"
-            hint="Reverse-DNS namespace"
+            hint="Organization domain (e.g. com.example)"
           />
           <TextField
             label="Artifact"
             value={cfg.artifactId}
             onChange={setArtifactId}
             placeholder="demo"
-            hint="Project handle"
+            hint="Project identifier (e.g. my-app)"
           />
           <TextField
             label="Name"
             value={cfg.name}
             onChange={v => config.updateField('name', v)}
             placeholder="demo"
+            hint="Display name (e.g. My App)"
           />
           <TextField
             label="Package"
             value={cfg.packageName}
             onChange={setPackageName}
             placeholder="com.example.demo"
+            hint="Root Java package folder"
             affix={
               !cfg.packageNameEditing ? (
                 <div className="bg-pixel-mint border-2 border-black px-4 py-1.5 font-mono text-xs font-bold text-black flex items-center justify-center shadow-[2px_2px_0px_#000] cursor-default">
